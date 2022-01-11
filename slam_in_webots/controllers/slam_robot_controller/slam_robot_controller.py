@@ -7,6 +7,7 @@ from controller import Motor
 from controller import Camera
 import rospy
 from sensor_msgs.msg import Image, CameraInfo
+import math
 
 def set_velocity(cmd_vel): #cmd_vel=[vx(m/s),omega(rad/s)]
     motors[0].setVelocity(cmd_vel[0]*20-cmd_vel[1]*2.8)
@@ -27,6 +28,30 @@ def publish_camera(i):
     elif(i==1):
         pub_r_cam.publish(img_msg)
     
+def publish_camera_info():
+    cam_info = CameraInfo()
+    cam_info.header.stamp = rospy.Time.from_seconds(time)
+    cam_info.height = cameras[0].getHeight()
+    cam_info.width = cameras[0].getWidth()
+    f_y = mat_from_fov_and_resolution(
+        h_fov_to_v_fov(cameras[0].getFov(), cam_info.height, cam_info.width),
+        cam_info.height)
+    f_x = mat_from_fov_and_resolution(cameras[0].getFov(), cam_info.width)
+    cam_info.K = [f_x, 0, cam_info.width / 2,
+                       0, f_y, cam_info.height / 2,
+                       0, 0, 1]
+    cam_info.P = [f_x, 0, cam_info.width / 2, 0,
+                       0, f_y, cam_info.height / 2, 0,
+                       0, 0, 1, 0]
+    pub_l_cam_info.publish(cam_info)
+    pub_r_cam_info.publish(cam_info)
+
+def mat_from_fov_and_resolution(fov, res):
+    return 0.5 * res * (math.cos((fov / 2)) / math.sin((fov / 2)))
+    
+def h_fov_to_v_fov(h_fov, height, width):
+    return 2 * math.atan(math.tan(h_fov * 0.5) * (height / width))
+
 # create the Robot instance.
 robot = Robot()
 
@@ -52,6 +77,9 @@ for motor in motors:
 rospy.init_node("webots_ros_interface")
 pub_l_cam = rospy.Publisher("/stereo/left/image_raw", Image, queue_size=1)
 pub_r_cam = rospy.Publisher("/stereo/right/image_raw", Image, queue_size=1)
+pub_l_cam_info = rospy.Publisher("/stereo/left/camera_info", CameraInfo, queue_size=1, latch=True)
+pub_r_cam_info = rospy.Publisher("/stereo/right/camera_info", CameraInfo, queue_size=1, latch=True)
+
 
 # l_camera.disable()
 
@@ -77,7 +105,7 @@ pub_r_cam = rospy.Publisher("/stereo/right/image_raw", Image, queue_size=1)
     # gray  = (red + green + blue) / 3
     # print ('r='+str(red)+' g='+str(green)+' b='+str(blue))
 
-cmd_vel = [0.3,0.0]  # [vx(m/s),omega(rad/s)]
+cmd_vel = [0.0,0.2]  # [vx(m/s),omega(rad/s)]
 set_velocity(cmd_vel)
 
 time=0
@@ -89,7 +117,7 @@ while robot.step(timestep) != -1:
     #  val = ds.getValue()
     for i in range(2):
        publish_camera(i)
-    # Process sensor data here.
+    publish_camera_info()
 
     # Enter here functions to send actuator commands, like:
     #  motor.setPosition(10.0)
