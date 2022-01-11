@@ -1,0 +1,232 @@
+#VRML_SIM R2021b utf8
+WorldInfo {
+  basicTimeStep 8
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.022105327305674438 0.9880544996051551 0.15251118094984176 1.5704695354884923
+  position 1.045656245494711 0.33950730010639907 -0.0347187970249304
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+  castShadows FALSE
+}
+RobocupSoccerField {
+  rotation 1 0 0 -1.570797
+}
+Robot {
+  translation -5.72841e-18 0.064653 2.62183e-07
+  rotation 2.58348e-13 1 1.34799e-06 3.14159
+  children [
+    Solid {
+      translation 0 0.06 0
+      children [
+        Solid {
+          translation 0 0.06 0
+          children [
+            Solid {
+              children [
+                DEF CAMERA_BASE_BOX Shape {
+                  appearance Appearance {
+                    material Material {
+                    }
+                  }
+                  geometry Box {
+                    size 0.1 0.04 0.1
+                  }
+                }
+              ]
+              name "camera_base_box"
+              boundingObject USE CAMERA_BASE_BOX
+            }
+            DEF right_camera Solid {
+              translation 0.05 0 0.04
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.333333 0.341176 0.32549
+                    }
+                  }
+                  geometry Box {
+                    size 0.01 0.01 0.01
+                  }
+                }
+                Camera {
+                  translation 0.006 0 0
+                  rotation 0 1 0 -1.5708
+                  name "right_camera"
+                  width 640
+                  height 480
+                }
+              ]
+            }
+            DEF left_camera Solid {
+              translation 0.05 0 -0.04
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.333333 0.341176 0.32549
+                    }
+                  }
+                  geometry Box {
+                    size 0.01 0.01 0.01
+                  }
+                }
+                Camera {
+                  translation 0.006 0 0
+                  rotation 0 1 0 -1.5708
+                  name "left_camera"
+                  width 640
+                  height 480
+                }
+              ]
+              name "right_camera_solid"
+            }
+          ]
+          name "camera_base_box"
+        }
+        DEF CAMERA_BASE Shape {
+          appearance Appearance {
+            material Material {
+              specularColor 0.937255 0.160784 0.160784
+            }
+          }
+          geometry Cylinder {
+            height 0.1
+            radius 0.02
+          }
+        }
+      ]
+      boundingObject USE CAMERA_BASE
+      physics Physics {
+      }
+    }
+    Transform {
+      translation -0.11 -0.03 0
+      children [
+        BallJoint {
+          endPoint Solid {
+            children [
+              DEF BACK_BALL Shape {
+                appearance PBRAppearance {
+                }
+                geometry Sphere {
+                  radius 0.02
+                }
+              }
+            ]
+            name "back_ball"
+            boundingObject USE BACK_BALL
+            physics Physics {
+            }
+          }
+        }
+      ]
+    }
+    Transform {
+      translation 0.11 -0.03 0
+      children [
+        BallJoint {
+          endPoint Solid {
+            children [
+              DEF FRONT_BALL Shape {
+                appearance PBRAppearance {
+                }
+                geometry Sphere {
+                  radius 0.02
+                }
+              }
+            ]
+            name "front_ball"
+            boundingObject USE FRONT_BALL
+            physics Physics {
+            }
+          }
+        }
+      ]
+    }
+    DEF L_JOINT HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 0 -1
+      }
+      device [
+        RotationalMotor {
+          name "right_motor"
+          maxVelocity 30
+        }
+        PositionSensor {
+          name "right_position_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -2.5355663477135087e-06 0.13999999997703896
+        rotation 1 0 -4.9064854912730177e-17 1.5708181111881978
+        children [
+          DEF R_WHEEL Shape {
+            appearance PBRAppearance {
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.05
+            }
+          }
+        ]
+        name "right_wheel"
+        boundingObject USE R_WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF R_JOINT HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 0 -1
+      }
+      device [
+        PositionSensor {
+          name "left_position_sensor"
+        }
+        RotationalMotor {
+          name "left_motor"
+          maxVelocity 30
+        }
+      ]
+      endPoint DEF L_WHEEL Solid {
+        translation 0 0 -0.13999999999999996
+        rotation 1 3.925223937639759e-17 3.925223937639759e-17 1.5707999999999998
+        children [
+          DEF L_WHEEL Shape {
+            appearance PBRAppearance {
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.05
+            }
+          }
+        ]
+        name "left_wheel"
+        boundingObject USE L_WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+      }
+      geometry Cylinder {
+        height 0.05
+        radius 0.13
+      }
+    }
+  ]
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "slam_robot_controller"
+}
+RobocupSoccerBall {
+  translation -2.99 0.0802836 0.000113025
+  rotation 1 0 0 1.573047667025132
+}

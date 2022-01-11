@@ -1,0 +1,11 @@
+Webots Proto Cache File version 1.5
+protoFileHash: 53bc03ef7afa6707c46fb5a437d70e63
+needsRobotAncestor: 1
+baseType: Robot
+slotType: 
+parameters: translation,rotation,name,controller,controllerArgs,customData,supervisor,synchronization,selfCollision,backlash,cameraWidth,cameraHeight,fieldOfView,jersey,bodySlot
+tags: 
+license: 
+licenseUrl: 
+documentationUrl: 
+info: This\sis\sa\sproto\sfile\sfor\sWebots\sfor\sthe\sTHMOS\nThe\sTHMOS\srobot\scontains:\n-\sthe\s20\sDOF\n-\scamera\n-\saccelerometer\nMay\s3rd,2021:\schanged\sthe\stotalmass\sTo\s5.22kg\nMay\s19th,2021:\schanged\sthe\scolor\nMay\s23th,2021:changed\sthe\snotation\sfor\sand\nMay\s14th,2021\s11:12\s:used\ssimplify_urdf_collision\stool\sto\ssimplify\sboundingObjects\nMay\s14th,2021\s18:51\s:backlash,\scamera\sand\slookup\stable\nJune\s5th,2021\s12:20\s:hand\s\s\s14:00:\sadd\ssolid\sfor\sbody\nJune\s9th,2021\schange\sthe\scolor\sand\sbounding\sfor\sleg_3,\sadd\stouchsensor\sand\sgyro\nJune\s10th,\s2021\schange\sthe\szero\spoint\sof\sarm_2,\sadjust\shands.\sold\srotation\sfor\sarm_2:\s0\s1\s0\s1.570796
