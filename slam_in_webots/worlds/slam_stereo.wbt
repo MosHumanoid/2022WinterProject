@@ -4,13 +4,13 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.022105327305674438 0.9880544996051551 0.15251118094984176 1.5704695354884923
-  position 1.045656245494711 0.33950730010639907 -0.0347187970249304
-}
-TexturedBackground {
+  orientation 0.09721168139437295 -0.9918171007680835 -0.08275703972758028 4.701389089296503
+  position 2.1674651932525784 0.5779699378595015 -0.31482792704787
 }
 TexturedBackgroundLight {
   castShadows FALSE
+}
+TexturedBackground {
 }
 RobocupSoccerField {
   rotation 1 0 0 -1.570797
@@ -25,45 +25,9 @@ Robot {
         Solid {
           translation 0 0.06 0
           children [
-            Solid {
-              children [
-                DEF CAMERA_BASE_BOX Shape {
-                  appearance Appearance {
-                    material Material {
-                    }
-                  }
-                  geometry Box {
-                    size 0.1 0.04 0.1
-                  }
-                }
-              ]
-              name "camera_base_box"
-              boundingObject USE CAMERA_BASE_BOX
-            }
-            DEF right_camera Solid {
-              translation 0.05 0 0.04
-              children [
-                Shape {
-                  appearance Appearance {
-                    material Material {
-                      diffuseColor 0.333333 0.341176 0.32549
-                    }
-                  }
-                  geometry Box {
-                    size 0.01 0.01 0.01
-                  }
-                }
-                Camera {
-                  translation 0.006 0 0
-                  rotation 0 1 0 -1.5708
-                  name "right_camera"
-                  width 640
-                  height 480
-                }
-              ]
-            }
-            DEF left_camera Solid {
+            Camera {
               translation 0.05 0 -0.04
+              rotation 0 1 0 -1.5708
               children [
                 Shape {
                   appearance Appearance {
@@ -75,18 +39,44 @@ Robot {
                     size 0.01 0.01 0.01
                   }
                 }
-                Camera {
-                  translation 0.006 0 0
-                  rotation 0 1 0 -1.5708
-                  name "left_camera"
-                  width 640
-                  height 480
+              ]
+              name "left_camera"
+              width 640
+              height 480
+            }
+            Camera {
+              translation 0.05 0 0.04
+              rotation 0 1 0 -1.5708
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.333333 0.341176 0.32549
+                    }
+                  }
+                  geometry Box {
+                    size 0.01 0.01 0.01
+                  }
                 }
               ]
-              name "right_camera_solid"
+              name "right_camera"
+              width 640
+              height 480
+            }
+            DEF CAMERA_BASE_BOX Shape {
+              appearance Appearance {
+                material Material {
+                }
+              }
+              geometry Box {
+                size 0.1 0.04 0.1
+              }
             }
           ]
           name "camera_base_box"
+          boundingObject USE CAMERA_BASE_BOX
+          physics Physics {
+          }
         }
         DEF CAMERA_BASE Shape {
           appearance Appearance {

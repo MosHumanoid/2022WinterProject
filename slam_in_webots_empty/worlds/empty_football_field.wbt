@@ -1,0 +1,21 @@
+#VRML_SIM R2021b utf8
+WorldInfo {
+  basicTimeStep 8
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.09721168139437295 -0.9918171007680835 -0.08275703972758028 4.701389089296503
+  position 2.1674651932525784 0.5779699378595015 -0.31482792704787
+}
+TexturedBackgroundLight {
+  castShadows FALSE
+}
+TexturedBackground {
+}
+RobocupSoccerField {
+  rotation 1 0 0 -1.570797
+}
+RobocupSoccerBall {
+  translation -2.99 0.0802836 0.000113025
+  rotation 1 0 0 1.573047667025132
+}
